@@ -1,0 +1,60 @@
+{
+    "manifests": {
+        "shbyjm/lead-forwarding": {
+            "manifest": {
+                "bundles": {
+                    "Shbyjm\\LeadForwarding\\ShbyjmLeadForwardingBundle": ["all"]
+                },
+                "env": {
+                    "HUB_API_URL": "https://hub.shbyjm.be",
+                    "LEAD_FORWARDING_HUB_API_KEY": "change_me_hub_api_key",
+                    "LEAD_FORWARDING_HUB_WEBHOOK_SECRET": "change_me_webhook_secret",
+                    "LEAD_FORWARDING_ALERT_EMAIL": "info@example.com",
+                    "MAILER_SENDER": "noreply@example.com"
+                },
+                "copy-from-recipe": {
+                    "config/": "%CONFIG_DIR%/"
+                },
+                "post-install-output": [
+                    "",
+                    "  <fg=green>shbyjm/lead-forwarding</> installed.",
+                    "",
+                    "  <fg=yellow>⚠ Configuration required before cache:clear can pass:</>",
+                    "",
+                    "  Set the following variables in <fg=yellow>.env.local</> :",
+                    "    <fg=yellow>LEAD_FORWARDING_HUB_API_KEY</>       API key (request from Hub admin)",
+                    "    <fg=yellow>LEAD_FORWARDING_HUB_WEBHOOK_SECRET</>  HMAC secret (coordinate with Hub admin)",
+                    "    <fg=yellow>LEAD_FORWARDING_ALERT_EMAIL</>        Recipient email for forwarding alerts",
+                    "    <fg=yellow>MAILER_SENDER</>                      Sender email for alert notifications",
+                    "    <fg=yellow>HUB_API_URL</>                        Hub base URL (default: https://hub.shbyjm.be)",
+                    "",
+                    "  Other required steps:",
+                    "    - Ensure <fg=yellow>shbyjm/admin-shell</> is installed (provides command.bus + async.bus)",
+                    "    - Add the Doctrine migrations path to <fg=yellow>config/packages/doctrine_migrations.yaml</>:",
+                    "        <fg=cyan>'Shbyjm\\LeadForwarding\\Migrations': '%kernel.project_dir%/vendor/shbyjm/lead-forwarding/migrations'</>",
+                    "    - Run <fg=yellow>php bin/console doctrine:migrations:migrate</>",
+                    "    - Open webhook access in <fg=yellow>config/packages/security.yaml</>:",
+                    "        <fg=cyan>access_control:</>",
+                    "        <fg=cyan>    - { path: ^/shbyjm/webhook/, roles: PUBLIC_ACCESS }</>",
+                    "    - Set up cron jobs:",
+                    "        <fg=cyan>* * * * * php bin/console lead-forwarding:send-pending --env=prod</>",
+                    "        <fg=cyan>*/5 * * * * php bin/console messenger:consume async --limit=50 --time-limit=240 --env=prod</>"
+                ]
+            },
+            "files": {
+                "config/packages/shbyjm_lead_forwarding.yaml": {
+                    "contents": [
+                        "shbyjm_lead_forwarding:",
+                        "    hub_api_url: '%env(HUB_API_URL)%'",
+                        "    hub_api_key: '%env(LEAD_FORWARDING_HUB_API_KEY)%'",
+                        "    hub_webhook_secret: '%env(LEAD_FORWARDING_HUB_WEBHOOK_SECRET)%'",
+                        "    alert_email: '%env(LEAD_FORWARDING_ALERT_EMAIL)%'",
+                        "    sender_email: '%env(MAILER_SENDER)%'"
+                    ],
+                    "executable": false
+                }
+            },
+            "ref": "%%REF%%"
+        }
+    }
+}

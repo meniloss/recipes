@@ -1,7 +1,7 @@
 {
     "recipes": {
         "shbyjm/admin-shell": ["1.1", "1.1.1", "1.1.2"],
-        "shbyjm/lead-forwarding": ["1.0"]
+        "shbyjm/lead-forwarding": ["1.0", "2.0"]
     },
     "branch": "main",
     "is_contrib": true,
