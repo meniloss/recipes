@@ -1,0 +1,13 @@
+{
+    "recipes": {
+        "shbyjm/admin-shell": ["1.1"],
+        "shbyjm/lead-forwarding": ["1.0"]
+    },
+    "branch": "main",
+    "is_contrib": true,
+    "_links": {
+        "repository": "github.com/meniloss/recipes",
+        "origin_template": "{package}:{version}@github.com/meniloss/recipes:main",
+        "recipe_template": "https://api.github.com/repos/meniloss/recipes/contents/{package_dotted}.{version}.json"
+    }
+}

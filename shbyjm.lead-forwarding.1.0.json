@@ -1,0 +1,57 @@
+{
+    "manifests": {
+        "shbyjm/lead-forwarding": {
+            "manifest": {
+                "bundles": {
+                    "Shbyjm\\LeadForwarding\\ShbyjmLeadForwardingBundle": ["all"]
+                },
+                "env": {
+                    "HUB_API_URL": "https://hub.shbyjm.be",
+                    "LEAD_FORWARDING_HUB_API_KEY": "your-api-key-here",
+                    "LEAD_FORWARDING_HUB_WEBHOOK_SECRET": "your-webhook-secret-here",
+                    "MAILER_SENDER": "noreply@your-site.example.com"
+                },
+                "copy-from-recipe": {
+                    "config/": "%CONFIG_DIR%/"
+                },
+                "post-install-output": [
+                    "",
+                    "  <fg=green>shbyjm/lead-forwarding</> installed. Configuration required:",
+                    "",
+                    "  1. Set the following variables in <fg=yellow>.env.local</>:",
+                    "     - <fg=yellow>LEAD_FORWARDING_HUB_API_KEY</> : request your API key from the Hub admin",
+                    "     - <fg=yellow>LEAD_FORWARDING_HUB_WEBHOOK_SECRET</> : shared HMAC secret (coordinate with Hub admin)",
+                    "     - <fg=yellow>MAILER_SENDER</> : sender email address for alert notifications",
+                    "     - <fg=yellow>HUB_API_URL</> : Hub base URL (default: https://hub.shbyjm.be)",
+                    "",
+                    "  2. Add the Doctrine migrations path to <fg=yellow>config/packages/doctrine_migrations.yaml</>:",
+                    "     <fg=cyan>'Shbyjm\\LeadForwarding\\Migrations': '%kernel.project_dir%/vendor/shbyjm/lead-forwarding/migrations'</>",
+                    "",
+                    "  3. Run <fg=yellow>php bin/console doctrine:migrations:migrate</>",
+                    "",
+                    "  4. Set up the cron job:",
+                    "     <fg=cyan>* * * * * php bin/console lead-forwarding:send-pending</>",
+                    "",
+                    "  5. If <fg=green>shbyjm/admin-shell</> is installed, add the admin routes in",
+                    "     <fg=yellow>config/routes/shbyjm_lead_forwarding.yaml</>:",
+                    "     <fg=cyan>shbyjm_lead_forwarding_admin:</>",
+                    "     <fg=cyan>    resource: '../../vendor/shbyjm/lead-forwarding/Infrastructure/Admin/Controller/'</>",
+                    "     <fg=cyan>    type: attribute</>"
+                ]
+            },
+            "files": {
+                "config/packages/shbyjm_lead_forwarding.yaml": {
+                    "contents": [
+                        "shbyjm_lead_forwarding:",
+                        "    hub_api_url: '%env(HUB_API_URL)%'",
+                        "    hub_api_key: '%env(LEAD_FORWARDING_HUB_API_KEY)%'",
+                        "    hub_webhook_secret: '%env(LEAD_FORWARDING_HUB_WEBHOOK_SECRET)%'",
+                        "    sender_email: '%env(MAILER_SENDER)%'"
+                    ],
+                    "executable": false
+                }
+            },
+            "ref": "b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1"
+        }
+    }
+}
