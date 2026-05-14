@@ -6,9 +6,7 @@
                     "Shbyjm\\AdminShell\\ShbyjmAdminShellBundle": ["all"]
                 },
                 "env": {
-                    "DEFAULT_URI": "https://your-site.example.com",
-                    "ADMIN_SHELL_UPLOAD_DIR": "%kernel.project_dir%/../public_html/uploads/admin-shell",
-                    "ADMIN_SHELL_UPLOAD_WEB_PREFIX": "/uploads/admin-shell"
+                    "DEFAULT_URI": "https://your-site.example.com"
                 },
                 "copy-from-recipe": {
                     "config/": "%CONFIG_DIR%/"
@@ -19,7 +17,6 @@
                 ],
                 "post-install-output": [
                     "  - Configure <fg=yellow>DEFAULT_URI</> in <fg=yellow>.env.local</> with your site URL",
-                    "  - Adjust <fg=yellow>ADMIN_SHELL_UPLOAD_DIR</> and <fg=yellow>ADMIN_SHELL_UPLOAD_WEB_PREFIX</> if needed",
                     "  - Edit <fg=yellow>config/packages/shbyjm_admin_shell.yaml</> to set your <fg=yellow>app_name</>",
                     "  - Add the Doctrine migrations path to <fg=yellow>config/packages/doctrine_migrations.yaml</>:",
                     "      <fg=cyan>'Shbyjm\\AdminShell\\Migrations': '%kernel.project_dir%/vendor/shbyjm/admin-shell/migrations'</>",
@@ -32,8 +29,8 @@
                         "shbyjm_admin_shell:",
                         "    app_name: 'My Site'",
                         "    default_uri: '%env(DEFAULT_URI)%'",
-                        "    upload_dir: '%env(resolve:ADMIN_SHELL_UPLOAD_DIR)%'",
-                        "    upload_web_prefix: '%env(ADMIN_SHELL_UPLOAD_WEB_PREFIX)%'"
+                        "    upload_dir: '%kernel.project_dir%/../public_html/uploads/admin-shell'",
+                        "    upload_web_prefix: '/uploads/admin-shell'"
                     ],
                     "executable": false
                 },
@@ -42,7 +39,7 @@
                     "executable": false
                 }
             },
-            "ref": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"
+            "ref": "2734263cfac3616b82c7e1bec24a05b9bdbd5338"
         }
     }
 }
