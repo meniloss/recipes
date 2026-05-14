@@ -9,7 +9,8 @@
                     "DEFAULT_URI": "https://your-site.example.com"
                 },
                 "copy-from-recipe": {
-                    "config/": "%CONFIG_DIR%/"
+                    "config/": "%CONFIG_DIR%/",
+                    "public_html/": "public_html/"
                 },
                 "gitignore": [
                     "/public_html/uploads/admin-shell/*",
