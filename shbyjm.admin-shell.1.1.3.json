@@ -1,0 +1,49 @@
+{
+    "manifests": {
+        "shbyjm/admin-shell": {
+            "manifest": {
+                "bundles": {
+                    "Shbyjm\\AdminShell\\ShbyjmAdminShellBundle": ["all"]
+                },
+                "env": {
+                    "DEFAULT_URI": "https://your-site.example.com"
+                },
+                "copy-from-recipe": {
+                    "config/": "%CONFIG_DIR%/",
+                    "public_html/": "public_html/"
+                },
+                "gitignore": [
+                    "/public_html/uploads/admin-shell/*",
+                    "!/public_html/uploads/admin-shell/.gitkeep"
+                ],
+                "post-install-output": [
+                    "",
+                    "  <fg=green>shbyjm/admin-shell</> installed.",
+                    "",
+                    "  - Configure <fg=yellow>DEFAULT_URI</> in <fg=yellow>.env.local</> with your site URL",
+                    "  - Edit <fg=yellow>config/packages/shbyjm_admin_shell.yaml</> to set your <fg=yellow>app_name</>",
+                    "  - Add the Doctrine migrations path to <fg=yellow>config/packages/doctrine_migrations.yaml</>:",
+                    "      <fg=cyan>'Shbyjm\\AdminShell\\Migrations': '%kernel.project_dir%/vendor/shbyjm/admin-shell/migrations'</>",
+                    "  - Run <fg=yellow>php bin/console doctrine:migrations:migrate</>"
+                ]
+            },
+            "files": {
+                "config/packages/shbyjm_admin_shell.yaml": {
+                    "contents": [
+                        "shbyjm_admin_shell:",
+                        "    app_name: 'My Site'",
+                        "    default_uri: '%env(DEFAULT_URI)%'",
+                        "    upload_dir: '%kernel.project_dir%/../public_html/uploads/admin-shell'",
+                        "    upload_web_prefix: '/uploads/admin-shell'"
+                    ],
+                    "executable": false
+                },
+                "public_html/uploads/admin-shell/.gitkeep": {
+                    "contents": [],
+                    "executable": false
+                }
+            },
+            "ref": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"
+        }
+    }
+}
