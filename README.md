@@ -6,8 +6,9 @@ Private Symfony Flex recipe repository for SHbyJM packages. Automates configurat
 
 | Package | Version | Description |
 |---------|---------|-------------|
-| `shbyjm/admin-shell` | 1.1 | Admin shell — auth, users, dashboard, branding uploads |
-| `shbyjm/lead-forwarding` | 1.0 | Lead forwarding via outbox pattern toward the Hub |
+| `shbyjm/admin-shell` | 1.1, 1.1.1, 1.1.2 | Admin shell — auth, users, dashboard, branding uploads |
+| `shbyjm/lead-forwarding` | 1.0, 2.0 | Lead forwarding via outbox pattern toward the Hub |
+| `shbyjm/lead-management` | 1.0 | CRM léger — leads, activités, rappels, session d'appel, settings |
 
 ## Usage on consumer sites
 

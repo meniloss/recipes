@@ -1,0 +1,69 @@
+{
+    "manifests": {
+        "shbyjm/lead-management": {
+            "manifest": {
+                "bundles": {
+                    "Shbyjm\\LeadManagement\\ShbyjmLeadManagementBundle": ["all"]
+                },
+                "env": {
+                    "HUB_API_URL": "https://hub.shbyjm.be",
+                    "HUB_LEAD_MANAGEMENT_API_KEY": "change_me_hub_api_key",
+                    "HUB_LEAD_MANAGEMENT_WEBHOOK_SECRET": "change_me_webhook_secret"
+                },
+                "copy-from-recipe": {
+                    "config/": "%CONFIG_DIR%/"
+                },
+                "post-install-output": [
+                    "",
+                    "  <fg=green>shbyjm/lead-management</> installed.",
+                    "",
+                    "  <fg=yellow>⚠ Prerequisites:</>",
+                    "    - <fg=yellow>shbyjm/admin-shell</> must be installed (provides command.bus, async.bus, security, dashboard)",
+                    "    - <fg=yellow>MAILER_DSN</> must be configured (used for new-lead notifications)",
+                    "",
+                    "  <fg=yellow>⚠ Configuration required:</>",
+                    "",
+                    "  Set the following variables in <fg=yellow>.env.local</> :",
+                    "    <fg=yellow>HUB_LEAD_MANAGEMENT_API_KEY</>         API key for Hub reconciliation",
+                    "    <fg=yellow>HUB_LEAD_MANAGEMENT_WEBHOOK_SECRET</>  HMAC secret for webhook signature verification",
+                    "    <fg=yellow>HUB_API_URL</>                         Hub base URL (default: https://hub.shbyjm.be)",
+                    "    <fg=yellow>MAILER_SENDER</>                       Sender email for notifications (already set by admin-shell)",
+                    "",
+                    "  Other required steps:",
+                    "    - Add the Doctrine migrations path to <fg=yellow>config/packages/doctrine_migrations.yaml</>:",
+                    "        <fg=cyan>'Shbyjm\\LeadManagement\\Migrations': '%kernel.project_dir%/vendor/shbyjm/lead-management/migrations'</>",
+                    "    - Run <fg=yellow>php bin/console doctrine:migrations:migrate</>",
+                    "    - Ensure webhook access is open in <fg=yellow>config/packages/security.yaml</>:",
+                    "        <fg=cyan>access_control:</>",
+                    "        <fg=cyan>    - { path: ^/shbyjm/webhook/, roles: PUBLIC_ACCESS }</>",
+                    "      (already done if shbyjm/lead-forwarding is installed)"
+                ]
+            },
+            "files": {
+                "config/packages/shbyjm_lead_management.yaml": {
+                    "contents": [
+                        "shbyjm_lead_management:",
+                        "    hub_api_url: '%env(string:HUB_API_URL)%'",
+                        "    hub_api_key: '%env(string:HUB_LEAD_MANAGEMENT_API_KEY)%'",
+                        "    hub_webhook_secret: '%env(string:HUB_LEAD_MANAGEMENT_WEBHOOK_SECRET)%'",
+                        "    sender_email: '%env(string:MAILER_SENDER)%'"
+                    ],
+                    "executable": false
+                },
+                "config/routes/shbyjm_lead_management.yaml": {
+                    "contents": [
+                        "shbyjm_lead_management_webhook:",
+                        "    resource: '../../vendor/shbyjm/lead-management/Infrastructure/Http/Controller/Webhook/'",
+                        "    type: attribute",
+                        "",
+                        "shbyjm_lead_management_admin:",
+                        "    resource: '../../vendor/shbyjm/lead-management/Infrastructure/Http/Controller/Admin/'",
+                        "    type: attribute"
+                    ],
+                    "executable": false
+                }
+            },
+            "ref": "2867ec3a91e96fc6f191873751706a5b25c40d1a"
+        }
+    }
+}
