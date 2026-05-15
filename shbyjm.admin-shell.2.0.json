@@ -1,0 +1,121 @@
+{
+    "manifests": {
+        "shbyjm/admin-shell": {
+            "manifest": {
+                "bundles": {
+                    "Shbyjm\\AdminShell\\ShbyjmAdminShellBundle": ["all"]
+                },
+                "env": {
+                    "DEFAULT_URI": "https://your-site.example.com"
+                },
+                "copy-from-recipe": {
+                    "config/": "%CONFIG_DIR%/",
+                    "public_html/": "public_html/"
+                },
+                "gitignore": [
+                    "/public_html/uploads/admin-shell/*",
+                    "!/public_html/uploads/admin-shell/.gitkeep"
+                ],
+                "post-install-output": [
+                    "",
+                    "  <fg=green>shbyjm/admin-shell</> installed.",
+                    "",
+                    "  <fg=yellow>⚠ Configuration required:</>",
+                    "",
+                    "  <fg=white>1.</> Set <fg=yellow>DEFAULT_URI</> in <fg=yellow>.env.local</> :",
+                    "     <fg=cyan>DEFAULT_URI=https://your-domain.com</>",
+                    "",
+                    "  <fg=white>2.</> Edit <fg=yellow>config/packages/shbyjm_admin_shell.yaml</> :",
+                    "     Set <fg=yellow>app_name</> to your site name.",
+                    "",
+                    "  <fg=white>3.</> Configure <fg=yellow>config/packages/security.yaml</> :",
+                    "     Add or merge the following blocks.",
+                    "",
+                    "     <fg=cyan>security:</>",
+                    "     <fg=cyan>    role_hierarchy:</>",
+                    "     <fg=cyan>        ROLE_SUPER_ADMIN: [ROLE_ADMIN]</>",
+                    "     <fg=cyan>    providers:</>",
+                    "     <fg=cyan>        admin_user:</>",
+                    "     <fg=cyan>            id: Shbyjm\\AdminShell\\Infrastructure\\Security\\AdminUserProvider</>",
+                    "     <fg=cyan>    firewalls:</>",
+                    "     <fg=cyan>        admin:</>",
+                    "     <fg=cyan>            pattern: ^/admin</>",
+                    "     <fg=cyan>            lazy: true</>",
+                    "     <fg=cyan>            provider: admin_user</>",
+                    "     <fg=cyan>            user_checker: Shbyjm\\AdminShell\\Infrastructure\\Security\\AdminUserChecker</>",
+                    "     <fg=cyan>            form_login:</>",
+                    "     <fg=cyan>                login_path: identity_login</>",
+                    "     <fg=cyan>                check_path: identity_login</>",
+                    "     <fg=cyan>                default_target_path: admin_dashboard</>",
+                    "     <fg=cyan>                username_parameter: _username</>",
+                    "     <fg=cyan>                password_parameter: _password</>",
+                    "     <fg=cyan>                enable_csrf: true</>",
+                    "     <fg=cyan>            logout:</>",
+                    "     <fg=cyan>                path: identity_logout</>",
+                    "     <fg=cyan>                target: identity_login</>",
+                    "     <fg=cyan>            login_throttling:</>",
+                    "     <fg=cyan>                max_attempts: 5</>",
+                    "     <fg=cyan>                interval: '15 minutes'</>",
+                    "     <fg=cyan>    access_control:</>",
+                    "     <fg=cyan>        - { path: ^/admin/setup$, roles: PUBLIC_ACCESS }</>",
+                    "     <fg=cyan>        - { path: ^/admin/login$, roles: PUBLIC_ACCESS }</>",
+                    "     <fg=cyan>        - { path: ^/admin/reset-password, roles: PUBLIC_ACCESS }</>",
+                    "     <fg=cyan>        - { path: ^/admin/invitation/accept, roles: PUBLIC_ACCESS }</>",
+                    "     <fg=cyan>        - { path: ^/admin, roles: ROLE_ADMIN }</>",
+                    "",
+                    "     <fg=yellow>Note:</> If <fg=yellow>security.yaml</> already has <fg=yellow>password_hashers</> or other",
+                    "     firewalls, merge the <fg=yellow>admin</> firewall into the existing config.",
+                    "     Place it <fg=yellow>before</> the <fg=yellow>main</> firewall if one exists.",
+                    "",
+                    "  <fg=white>4.</> Ensure <fg=yellow>MAILER_DSN</> is configured in <fg=yellow>.env.local</> :",
+                    "     Required for password reset and invitation emails.",
+                    "",
+                    "  <fg=white>5.</> Add the admin-shell migrations path to <fg=yellow>config/packages/doctrine_migrations.yaml</>",
+                    "     (create the file if missing):",
+                    "",
+                    "     <fg=cyan>doctrine_migrations:</>",
+                    "     <fg=cyan>    migrations_paths:</>",
+                    "     <fg=cyan>        'Shbyjm\\AdminShell\\Migrations': '%kernel.project_dir%/vendor/shbyjm/admin-shell/migrations'</>",
+                    "",
+                    "     Merge with existing <fg=yellow>migrations_paths</> if any.",
+                    "",
+                    "  <fg=white>6.</> Run database migrations:",
+                    "     <fg=cyan>php bin/console doctrine:migrations:migrate</>"
+                ]
+            },
+            "files": {
+                "config/packages/shbyjm_admin_shell.yaml": {
+                    "contents": [
+                        "shbyjm_admin_shell:",
+                        "    app_name: 'My Site'",
+                        "    default_uri: '%env(DEFAULT_URI)%'",
+                        "    upload_dir: '%kernel.project_dir%/../public_html/uploads/admin-shell'",
+                        "    upload_web_prefix: '/uploads/admin-shell'",
+                        "    route_prefix: '/admin'"
+                    ],
+                    "executable": false
+                },
+                "config/routes/shbyjm_admin_shell.yaml": {
+                    "contents": [
+                        "shbyjm_admin_shell:",
+                        "    resource: '@ShbyjmAdminShellBundle/Resources/config/routes.php'"
+                    ],
+                    "executable": false
+                },
+                "config/packages/reset_password.yaml": {
+                    "contents": [
+                        "symfonycasts_reset_password:",
+                        "    request_password_repository: Shbyjm\\AdminShell\\Infrastructure\\Persistence\\Doctrine\\Repository\\DoctrineResetPasswordRequestRepository",
+                        "    lifetime: 86400"
+                    ],
+                    "executable": false
+                },
+                "public_html/uploads/admin-shell/.gitkeep": {
+                    "contents": [],
+                    "executable": false
+                }
+            },
+            "ref": "ea878d243ad63a13b6ab9da387c71af64d294aaf"
+        }
+    }
+}

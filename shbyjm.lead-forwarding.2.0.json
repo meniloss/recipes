@@ -42,6 +42,14 @@
                 ]
             },
             "files": {
+                "config/routes/shbyjm_lead_forwarding.yaml": {
+                    "contents": [
+                        "shbyjm_lead_forwarding_webhook:",
+                        "    resource: '../../vendor/shbyjm/lead-forwarding/Infrastructure/Http/Controller/'",
+                        "    type: attribute"
+                    ],
+                    "executable": false
+                },
                 "config/packages/shbyjm_lead_forwarding.yaml": {
                     "contents": [
                         "shbyjm_lead_forwarding:",
@@ -54,7 +62,7 @@
                     "executable": false
                 }
             },
-            "ref": "f5d07d1c7b4eb1514b60461960f8b301c3dcb8c4"
+            "ref": "36ebfca9454dc78c0074217b82ede652d4633e78"
         }
     }
 }

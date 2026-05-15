@@ -6,7 +6,7 @@ Private Symfony Flex recipe repository for SHbyJM packages. Automates configurat
 
 | Package | Version | Description |
 |---------|---------|-------------|
-| `shbyjm/admin-shell` | 1.1, 1.1.1, 1.1.2 | Admin shell — auth, users, dashboard, branding uploads |
+| `shbyjm/admin-shell` | 1.1, 1.1.1, 1.1.2, 1.1.3, 2.0 | Admin shell — auth, users, dashboard, branding uploads |
 | `shbyjm/lead-forwarding` | 1.0, 2.0 | Lead forwarding via outbox pattern toward the Hub |
 | `shbyjm/lead-management` | 1.0 | CRM léger — leads, activités, rappels, session d'appel, settings |
 
@@ -107,3 +107,17 @@ When the expected configuration of a package changes (new env vars, new config k
 - Never put real secrets (API keys, tokens) in recipes — use placeholders only
 - Paths assume PlanetHoster N0C hosting structure: `symfony/` + `public_html/` at the same level
 - The `ref` field is a random 40-character hex string — regenerate it when updating a recipe (`php -r "echo bin2hex(random_bytes(20));"`)
+
+## Release checklist for SHbyJM packages
+
+Before tagging a new major or minor version of a `shbyjm/*` package:
+
+1. The package code is tested and committed
+2. The tag is created on the package repo (e.g. `v2.0.0`)
+3. The corresponding recipe is created or updated in `meniloss/recipes`
+4. `index.json` is updated with the new version
+5. This README table is updated
+6. Push `meniloss/recipes` to `main`
+7. The release is only announced after steps 1–6 are complete
+
+If the new version changes the installation (new env vars, new config keys, new routes, removed dependencies), a **new recipe version** is required. Patch versions that don't change the installation (bug fixes, template changes) do **not** need a new recipe — they are covered by the existing recipe for their minor version (e.g. recipe `2.0` covers `2.0.0`, `2.0.1`, `2.0.2`, etc.).
